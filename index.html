@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Michał Cichy | Teleinformatics Engineer Portfolio</title>
+    <title>Michał Cichy | Portfolio</title>
     <style>
         :root {
             --color-primary: #00d4ff;
@@ -30,77 +30,102 @@
         }
 
         /* Animated Background */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+        .background-animation{
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+
+        background:
+            radial-gradient(900px 520px at 18% 12%, rgba(0, 212, 255, 0.22), transparent 60%),
+            radial-gradient(780px 480px at 82% 22%, rgba(131, 56, 236, 0.20), transparent 62%),
+            radial-gradient(760px 520px at 55% 88%, rgba(255, 0, 110, 0.12), transparent 62%),
+            linear-gradient(180deg, #070a1a 0%, #0a0e27 45%, #070a1a 100%);
         }
 
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+        .background-animation::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background-image:
+            linear-gradient(to right, rgba(224,231,255,0.06) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(224,231,255,0.06) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(circle at 30% 20%, black 0%, transparent 60%);
+        opacity: 0.35;
+        pointer-events:none;
         }
 
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 20s infinite ease-in-out;
+
+        /* ===== Modern floating orbs (replace old shapes) ===== */
+        .floating-shapes{
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        filter: saturate(1.1);
         }
 
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            background: var(--color-primary);
-            top: 20%;
-            left: 10%;
-            border-radius: 50%;
-            animation-delay: 0s;
+        .shape{
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 999px;
+        opacity: 0.22;
+        background:
+            radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.0) 42%),
+            radial-gradient(circle at 60% 70%, rgba(0,212,255,0.35), rgba(0,212,255,0.0) 55%),
+            radial-gradient(circle at 35% 65%, rgba(131,56,236,0.28), rgba(131,56,236,0.0) 60%),
+            radial-gradient(circle at 70% 35%, rgba(255,0,110,0.18), rgba(255,0,110,0.0) 62%);
+        box-shadow: 0 0 80px rgba(0,212,255,0.10);
+        mix-blend-mode: screen;
+        backdrop-filter: blur(2px);
+
+        animation: orbFloat 18s ease-in-out infinite;
+        will-change: transform;
         }
 
-        .shape:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            background: var(--color-secondary);
-            top: 60%;
-            left: 80%;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation-delay: 3s;
+        .shape:nth-child(1){
+        width: 420px; height: 420px;
+        left: -140px; top: 6%;
+        animation-duration: 22s;
         }
 
-        .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            background: var(--color-accent);
-            top: 40%;
-            left: 50%;
-            transform: rotate(45deg);
-            animation-delay: 6s;
+        .shape:nth-child(2){
+        width: 360px; height: 360px;
+        right: -160px; top: 18%;
+        animation-duration: 26s;
+        animation-delay: -6s;
+        opacity: 0.18;
         }
 
-        .shape:nth-child(4) {
-            width: 60px;
-            height: 60px;
-            background: var(--color-primary);
-            top: 80%;
-            left: 20%;
-            border-radius: 50%;
-            animation-delay: 9s;
+        .shape:nth-child(3){
+        width: 520px; height: 520px;
+        left: 18%; bottom: -220px;
+        animation-duration: 28s;
+        animation-delay: -10s;
+        opacity: 0.16;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-30px) rotate(180deg);
-            }
+        .shape:nth-child(4){
+        width: 260px; height: 260px;
+        right: 14%; bottom: 14%;
+        animation-duration: 20s;
+        animation-delay: -3s;
+        opacity: 0.20;
         }
+
+        @keyframes orbFloat{
+        0%   { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+        35%  { transform: translate3d(24px, -18px, 0) scale(1.05) rotate(8deg); }
+        70%  { transform: translate3d(-18px, 22px, 0) scale(0.98) rotate(-6deg); }
+        100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce){
+        .shape{ animation: none; }
+        }
+
 
         /* Header */
         header {
@@ -352,84 +377,105 @@
         }
 
         .tag {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--color-primary);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 212, 255, 0.3);
+        display: inline-block;
+        background: rgba(0, 212, 255, 0.1);
+        color: var(--color-primary);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+        
+        /* ===== Timeline (Experience + Certifications) ===== */
+        .timeline{
+        position: relative;
+        padding: 1.5rem 0;
+        display: grid;
+        gap: 1.25rem;
         }
 
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            padding: 2rem 0;
+        .timeline::before{
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        transform: translateX(-50%);
+        background: linear-gradient(180deg,
+            rgba(0,212,255,0.0),
+            rgba(0,212,255,0.55),
+            rgba(131,56,236,0.55),
+            rgba(0,212,255,0.0)
+        );
+        filter: drop-shadow(0 0 10px rgba(0,212,255,0.25));
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--color-primary), var(--color-accent));
+        .timeline-item{
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        min-height: 90px;
         }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            display: flex;
-            align-items: center;
+        .timeline-item:nth-child(odd){
+        flex-direction: row;
+        text-align: right;
         }
 
-        .timeline-item:nth-child(odd) {
-            flex-direction: row;
-            text-align: right;
+        .timeline-item:nth-child(even){
+        flex-direction: row-reverse;
+        text-align: left;
         }
 
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-            text-align: left;
+        .timeline-dot{
+        width: 14px;
+        height: 14px;
+        background: radial-gradient(circle at 30% 30%, #ffffff 0%, var(--color-primary) 55%, var(--color-accent) 100%);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 28px;
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 6px rgba(0,212,255,0.10), 0 0 22px rgba(0,212,255,0.35);
+        z-index: 2;
         }
 
-        .timeline-content {
-            flex: 1;
-            background: var(--color-bg-light);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 0 2rem;
-            transition: all 0.3s;
+        .timeline-content{
+        flex: 1;
+        max-width: 560px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(224,231,255,0.10);
+        border-radius: 18px;
+        padding: 1.25rem 1.25rem 1rem;
+        margin: 0 2.25rem;
+        box-shadow: 0 18px 55px rgba(0,0,0,0.35);
+        backdrop-filter: blur(10px);
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
-        .timeline-content:hover {
-            border-color: var(--color-primary);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
-            transform: scale(1.02);
+        .timeline-content:hover{
+        transform: translateY(-4px);
+        border-color: rgba(0,212,255,0.35);
+        box-shadow: 0 22px 70px rgba(0,0,0,0.45);
         }
 
-        .timeline-dot {
-            width: 20px;
-            height: 20px;
-            background: var(--color-primary);
-            border-radius: 50%;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 20px var(--color-primary);
-            z-index: 1;
+        .timeline-content h3{
+        margin-bottom: 0.35rem;
+        letter-spacing: 0.2px;
         }
 
-        .timeline-content h3 {
-            color: var(--color-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-date {
-            color: var(--color-accent);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+        .timeline-date{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(0,212,255,0.22);
+        background: rgba(0,212,255,0.08);
+        color: var(--color-text);
+        font-size: 0.92rem;
+        margin-bottom: 0.6rem;
         }
 
         /* Projects Grid */
@@ -592,6 +638,29 @@
                 text-align: center;
             }
 
+            /* Mobile: Experience jako jedna kolumna */
+            #experience .timeline::before { left: 18px; transform: none; }
+
+            #experience .timeline-item { flex-direction: row !important; text-align: left !important; }
+
+            #experience .timeline-dot { left: 18px; transform: none; }
+
+            #experience .timeline-content { margin: 0 0 0 52px; max-width: 100%; }
+
+            #experience .timeline-content ul { margin-top: 0.75rem; padding-left: 1.1rem; }
+
+            #experience .timeline-content li { margin: 0.45rem 0; }
+
+            /* Certifications: link/card styling (bez zmiany układu) */
+            #certifications a { text-decoration: none; color: inherit; display: block; border-radius: 18px; }
+
+            #certifications a:focus-visible { outline: 3px solid rgba(0,212,255,0.35); outline-offset: 4px; }
+
+            #certifications a .timeline-content { border-color: rgba(131,56,236,0.20); }
+
+            #certifications a:hover .timeline-content { border-color: rgba(131,56,236,0.45); box-shadow: 0 22px 70px rgba(0,0,0,0.48); }
+
+
             .hero-text h1 {
                 font-size: 2.5rem;
             }
@@ -604,28 +673,228 @@
                 display: none;
             }
 
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                flex-direction: row !important;
-                text-align: left !important;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-
-            .timeline-content {
-                margin-left: 60px;
-                margin-right: 0;
-            }
-
             .contact-container {
                 grid-template-columns: 1fr;
             }
         }
+
+        .profile-photo{
+        width: 350px;      
+        height: 350px;
+        object-fit: cover; 
+        object-position: 50% 35%; 
+        border-radius: 18px;
+        }
+
+        .cert-tile{
+        height: 210px;           
+        padding: 14px;
+        display: grid;
+        place-items: center;
+        }
+
+        .cert-tile img{
+        width: 100%;
+        height: 100%;
+        max-width: 240px;        
+        max-height: 180px;        
+        object-fit: contain;     
+        object-position: center;
+        filter: saturate(1.05) contrast(1.05);
+        }
+
+                /* kontener z certami */
+        .cert-grid{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(110px, 1fr)); /* 3 w pierwszym rzędzie */
+        gap: 12px;
+        align-items: stretch;
+        }
+
+        /* 5 elementów => 3 + 2 (drugi rząd) */
+        @media (max-width: 768px){
+        .cert-grid{
+            grid-template-columns: repeat(2, minmax(120px, 1fr)); /* mobile: 2 w rzędzie */
+        }
+        }
+
+        @media (max-width: 420px){
+        .cert-grid{
+            grid-template-columns: 1fr; /* bardzo wąsko: 1 w rzędzie */
+        }
+        }
+
+
+        #certifications .timeline > a:nth-child(odd) .timeline-item{
+        flex-direction: row !important;
+        text-align: right !important;
+        }
+        #certifications .timeline > a:nth-child(even) .timeline-item{
+        flex-direction: row-reverse !important;
+        text-align: left !important;
+        }
+
+        /* ===== Match typography/colors to Skills ===== */
+        #experience .timeline-content h3,
+        #certifications .timeline-content h3{
+        color: var(--color-primary);
+        }
+
+        #experience .timeline-content p,
+        #certifications .timeline-content p{
+        color: var(--color-text-dim);
+        }
+
+        #experience .timeline-content ul,
+        #certifications .timeline-content ul{
+        color: var(--color-text-dim) !important; /* przebija inline color */
+        }
+
+        #experience .timeline-content strong,
+        #certifications .timeline-content strong{
+        color: var(--color-text);
+        }
+
+        /* ===== Live Terminal ===== */
+        .terminal-wrap{
+        max-width: 980px;
+        margin: 0 auto;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(224,231,255,0.12);
+        border-radius: 18px;
+        box-shadow: 0 18px 55px rgba(0,0,0,0.35);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        }
+
+        .terminal-top{
+        display: grid;
+        grid-template-columns: 84px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 14px;
+        background: rgba(10,14,39,0.55);
+        border-bottom: 1px solid rgba(224,231,255,0.10);
+        }
+
+        .terminal-dots{ display: inline-flex; gap: 8px; align-items: center; }
+        .terminal-dots span{
+        width: 10px; height: 10px; border-radius: 999px;
+        background: rgba(224,231,255,0.18);
+        }
+        .terminal-dots span:nth-child(1){ background: rgba(255,90,90,0.75); }
+        .terminal-dots span:nth-child(2){ background: rgba(255,210,90,0.75); }
+        .terminal-dots span:nth-child(3){ background: rgba(90,255,170,0.70); }
+
+        .terminal-title{
+        color: var(--color-text-dim);
+        font-size: 0.95rem;
+        letter-spacing: 0.2px;
+        user-select: none;
+        }
+
+        .terminal-copy{
+        background: rgba(0,212,255,0.10);
+        color: var(--color-primary);
+        border: 1px solid rgba(0,212,255,0.30);
+        border-radius: 12px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .terminal-copy:hover{
+        transform: translateY(-2px);
+        border-color: rgba(0,212,255,0.55);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+        }
+        .terminal-copy:focus-visible{
+        outline: 3px solid rgba(0,212,255,0.35);
+        outline-offset: 3px;
+        }
+
+        .terminal-screen{
+        padding: 16px 16px 14px;
+        background: radial-gradient(900px 380px at 20% 10%, rgba(0,212,255,0.08), transparent 60%),
+                    radial-gradient(800px 340px at 80% 0%, rgba(131,56,236,0.07), transparent 62%),
+                    rgba(10,14,39,0.30);
+        }
+
+        .terminal-output{
+        margin: 0 0 10px 0;
+        color: rgba(224,231,255,0.90);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.95rem;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        }
+
+        .terminal-prompt{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: baseline;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.95rem;
+        color: rgba(224,231,255,0.92);
+        user-select: none;
+        }
+        .terminal-user{ color: rgba(90,255,170,0.85); }
+        .terminal-path{ color: rgba(0,212,255,0.85); }
+        .terminal-dollar{ color: rgba(224,231,255,0.70); }
+
+        .terminal-cmd{ color: rgba(224,231,255,0.94); }
+        .terminal-caret{
+        width: 10px;
+        height: 1.1em;
+        background: rgba(224,231,255,0.75);
+        display: inline-block;
+        transform: translateY(2px);
+        animation: caretBlink 1s step-end infinite;
+        }
+        @keyframes caretBlink{ 50%{ opacity: 0; } }
+
+        .terminal-actions{
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 14px;
+        background: rgba(10,14,39,0.40);
+        border-top: 1px solid rgba(224,231,255,0.10);
+        }
+
+        .terminal-btn{
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(224,231,255,0.12);
+        color: var(--color-text);
+        border-radius: 14px;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.92rem;
+        }
+        .terminal-btn:hover{
+        transform: translateY(-2px);
+        border-color: rgba(0,212,255,0.35);
+        box-shadow: 0 14px 45px rgba(0,0,0,0.35);
+        }
+        .terminal-btn:focus-visible{
+        outline: 3px solid rgba(0,212,255,0.35);
+        outline-offset: 3px;
+        }
+        .terminal-btn-ghost{
+        background: transparent;
+        color: var(--color-text-dim);
+        }
+
+        .terminal-note{
+        margin: 0;
+        padding: 0 14px 14px;
+        color: var(--color-text-dim);
+        font-size: 0.95rem;
+        }
+
+
     </style>
 </head>
 <body>
@@ -643,7 +912,7 @@
             <div class="logo">MC</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#terminal">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#certifications">Certifications</a></li>
@@ -654,29 +923,124 @@
     </header>
 
     <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Michał Cichy, BEng</h1>
-                <h2>ICT Engineer / Master's Student</h2>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="#projects" class="btn btn-secondary">View Projects</a>
-                </div>
+    <div class="hero-content hero-split">
+        <!-- Left: profile -->
+        <div class="hero-profile">
+        <div class="profile-card">
+            <img
+            class="profile-photo"
+            src="assets/zdjecie_przyciete.jpg"
+            alt="Michał Cichy – zdjęcie profilowe"
+            loading="eager"
+            />
+            <div class="profile-meta">
+            <h1>Michał Cichy, BEng</h1>
+            <h2>Master’s Student</h2>
+
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-secondary">View Projects</a>
             </div>
-            <div class="card-3d-container">
-                <div class="card-3d">
-                    <div class="card-face">
-                        <h3>🎓 Education</h3>
-                        <p>Wroclaw University of Science and Technology</p>
-                        <p>Field of study: Teleinformatics</p>
-                        <p style="margin-top: 1rem;">Master (Expected 07/26)</p>
-                        <p>Bachelor of Engineering (10/21 - 01/25)</p>
-                    </div>
-                </div>
             </div>
+        </div>
+        </div>
+
+        <!-- Right: certifications logos -->
+        <div class="hero-certs">
+        <h3 class="hero-certs-title">Certifications</h3>
+
+        <div class="cert-grid">
+
+            <a class="cert-tile"
+            href="https://www.skills.google/public_profiles/f6524344-601d-4bf1-92dc-78914fbbd7c1/badges/21466565?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share"
+            target="_blank" rel="noopener"
+            aria-label="Google Cloud">
+            <img src="assets/GoogleCloud.png" alt="Google Cloud" loading="lazy" />
+            </a>
+
+            <a class="cert-tile"
+            href="https://www.credly.com/badges/e773edf5-3781-46d3-b348-c7ed95d38f9b/public_url"
+            target="_blank" rel="noopener"
+            aria-label="CCNA Switching, Routing and Wireless Essentials – Credly">
+            <img src="assets/CCNA2.png" alt="Cisco CCNA SRWE" loading="lazy" />
+            </a>
+
+            <a class="cert-tile"
+            href="https://www.credly.com/badges/c3e2bc80-2b73-4df2-bea3-5438fd1e3773/public_url"
+            target="_blank" rel="noopener"
+            aria-label="CCNA Introduction to Networks – Credly">
+            <img src="assets/CCNA1.png" alt="Cisco CCNA ITN" loading="lazy" />
+            </a>
+
+            <a class="cert-tile"
+            href="https://www.credly.com/badges/8727958d-086a-4bb7-a475-8762a997407c/public_url"
+            target="_blank" rel="noopener"
+            aria-label="CyberOps Associate – Credly">
+            <img src="assets/CyberOps.png" alt="Cisco CyberOps Associate" loading="lazy" />
+            </a>
+
+            <a class="cert-tile"
+            href="https://www.credly.com/badges/7c534f25-1771-440b-acc2-1c30645ea82c/public_url"
+            target="_blank" rel="noopener"
+            aria-label="Ethical Hacker – Credly">
+            <img src="assets/EthicalHacker.png" alt="Cisco Ethical Hacker" loading="lazy" />
+            </a>
+            
+        </div>
+
+        <p class="hero-certs-note">
+            Click a badge to open the authentication.
+        </p>
+        </div>
+    </div>
+    </section>
+
+    <section id="terminal" aria-label="Live terminal">
+    <h2 class="section-title">About Me</h2>
+
+    <div class="terminal-wrap">
+        <div class="terminal-top">
+        <div class="terminal-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="terminal-title">michal@portfolio:~</div>
+        <button class="terminal-copy" type="button" aria-label="Copy terminal output">Copy</button>
+        </div>
+
+        <div class="terminal-screen" role="region" aria-label="Terminal output" tabindex="0">
+        <pre class="terminal-output" id="terminalOutput"></pre>
+        <div class="terminal-prompt">
+            <span class="terminal-user">michal@portfolio</span><span class="terminal-sep">:</span><span class="terminal-path">~</span><span class="terminal-dollar">$</span>
+            <span class="terminal-cmd" id="terminalCmd"></span><span class="terminal-caret" aria-hidden="true"></span>
+        </div>
+        </div>
+
+        <div class="terminal-actions" aria-label="Terminal commands">
+        <button type="button" class="terminal-btn" data-cmd="whoami">whoami</button>
+        <button type="button" class="terminal-btn" data-cmd="contact --quick">contact --quick</button>
+        <button type="button" class="terminal-btn" data-cmd="kpi">kpi</button>
+        <button type="button" class="terminal-btn" data-cmd="projects --networks">projects --networks</button>
+        <button type="button" class="terminal-btn" data-cmd="projects --cloud">projects --cloud</button>
+        <button type="button" class="terminal-btn" data-cmd="projects --software">projects --software</button>
+        <button type="button" class="terminal-btn terminal-btn-ghost" data-cmd="clear">clear</button>
+        </div>
+
+        <p class="terminal-note">Tip: click a command, then Copy to paste into your notes.</p>
+    </div>
+        <div class="skill-tags" style="justify-content: center;">
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Honor/1530941182/treasury?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <span class="tag">🏆 Best Matura Exam 2021</span>
+            </a>
+            <span class="tag">🌐 English C1/B2</span>
+            <span class="tag">🌐 German A2</span>
+            <span class="tag">📍 Wrocław, Poland</span>
+            <span class="tag">🚗 Driving License cat. B</span>
         </div>
     </section>
 
+
+    <!-- About Me 
     <section id="about">
         <h2 class="section-title">About Me</h2>
         <div style="max-width: 800px; margin: 0 auto; text-align: center;">
@@ -694,12 +1058,41 @@
             </div>
         </div>
     </section>
+    -->
 
     <section id="skills">
         <h2 class="section-title">Skills</h2>
         <div class="skills-grid">
             <div class="skill-card">
-                <h3>💻 Programming</h3>
+                <h3>🌐 Networking</h3>
+                <p>Comprehensive knowledge of network design, protocols, and infrastructure.</p>
+                <div class="skill-tags">
+                    <span class="tag">LAN/WAN Design</span>
+                    <span class="tag">Network Security</span>
+                    <span class="tag">VLAN</span>
+                    <span class="tag">OSPF</span>
+                    <span class="tag">VPN</span>
+                    <span class="tag">DHCP</span>
+                    <span class="tag">Troubleshooting</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <h3>☁️ Cloud Computing</h3>
+                <p>Experience with major cloud platforms and virtualization technologies.</p>
+                <div class="skill-tags">
+                    <span class="tag">Google Cloud</span>
+                    <span class="tag">AWS</span>
+                    <span class="tag">Virtualization</span>
+                    <span class="tag">RAID</span>
+                    <span class="tag">Cloud Security</span>
+                    <span class="tag">SAN</span>
+                    <span class="tag">IaaS/PaaS/SaaS</span>
+                </div>
+            </div>
+        
+            <div class="skill-card">
+                <h3>💻 Software Development</h3>
                 <p>Proficient in multiple programming languages with focus on systems and network development.</p>
                 <div class="skill-tags">
                     <span class="tag">Python</span>
@@ -709,34 +1102,16 @@
                     <span class="tag">Ruby on Rails</span>
                 </div>
             </div>
-            <div class="skill-card">
-                <h3>🌐 Networking</h3>
-                <p>Comprehensive knowledge of network design, protocols, and infrastructure.</p>
-                <div class="skill-tags">
-                    <span class="tag">LAN/WAN Design</span>
-                    <span class="tag">VLAN</span>
-                    <span class="tag">OSPF</span>
-                    <span class="tag">VPN</span>
-                    <span class="tag">DHCP</span>
-                    <span class="tag">NAT</span>
-                </div>
-            </div>
-            <div class="skill-card">
-                <h3>☁️ Cloud &amp; DevOps</h3>
-                <p>Experience with cloud platforms, containerization, and modern development practices.</p>
-                <div class="skill-tags">
-                    <span class="tag">Google Cloud</span>
-                    <span class="tag">AWS</span>
-                    <span class="tag">Docker</span>
-                    <span class="tag">Git</span>
-                </div>
-            </div>
+            
+            
             <div class="skill-card">
                 <h3>💻 Operating Systems</h3>
-                <p>Experience in working with Linux and automating tasks with Bash scripting.</p>
+                <p>Experience in working with Linux and automating tasks with Bash scripting. Containerization and orchestration.</p>
                 <div class="skill-tags">
                     <span class="tag">Linux</span>
                     <span class="tag">Bash</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Kubernetes</span>
                 </div>
             </div>
             <div class="skill-card">
@@ -747,6 +1122,7 @@
                     <span class="tag">Cryptography</span>
                     <span class="tag">ACL</span>
                     <span class="tag">Security Policies</span>
+                    <span class="tag">Penetration Testing</span>
                 </div>
             </div>
             <div class="skill-card">
@@ -762,24 +1138,22 @@
                 </div>
             </div>
             <div class="skill-card">
-                <h3>📊 Tools &amp; Design</h3>
-                <p>Proficient in various design, documentation, and development tools.</p>
+                <h3>📊 Machine Learning</h3>
+                <p>Experience with building and training machine learning models using TensorFlow and NLP techniques.</p>
                 <div class="skill-tags">
-                    <span class="tag">Microsoft Office</span>
-                    <span class="tag">LaTeX</span>
-                    <span class="tag">BricsCAD</span>
-                    <span class="tag">UML</span>
-                    <span class="tag">Draw.io</span>
+                    <span class="tag">Neural Networks</span>
+                    <span class="tag">Natural Language Processing</span>
+                    <span class="tag">TensorFlow</span>
                 </div>
             </div>
             <div class="skill-card">
                 <h3>📊 Soft Skills</h3>
-                <p>Proficient in various interpersonal and cognitive skills.</p>
+                <p>Team work experience and proficiency in various interpersonal skills.</p>
                 <div class="skill-tags">
                     <span class="tag">Team collaboration</span>
-                    <span class="tag">Public speaking in a foreign language</span>
-                    <span class="tag">Analytical thinking</span>
-                    <span class="tag">Detail oriented</span>
+                    <span class="tag">Public speaking</span>
+                    <span class="tag">Agile</span>
+                    <span class="tag">Critical thinking</span>
                 </div>
             </div>
         </div>
@@ -808,6 +1182,34 @@
     <section id="certifications">
         <h2 class="section-title">Certifications</h2>
         <div class="timeline">
+            <a href="https://www.skills.google/public_profiles/f6524344-601d-4bf1-92dc-78914fbbd7c1/badges/21466565?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Google Cloud Computing Foundations Certificate</h3>
+                        <div class="timeline-date">02/26</div>
+                        <p>Google Cloud</p>
+                        <ul style="margin-top: 0.5rem; color: var(--color-text-dim); list-style-position: inside;">
+                            <li>Cloud Security, Networking, Cloud Storage, Compute Engine, IAM, VPC Network, Cloud Functions, Monitoring, Pub/Sub, GKE, Kubernetes</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+            <a href="https://www.credly.com/badges/7c534f25-1771-440b-acc2-1c30645ea82c/public_url" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Ethical Hacker</h3>
+                        <div class="timeline-date">01/26</div>
+                        <p>Cisco</p>
+                        <ul style="margin-top: 0.5rem; color: var(--color-text-dim); list-style-position: inside;">
+                            <li>Ethical Hacking, Exploiting Applications, Exploiting Networks, IoT Security, Penetration Testing, Pentesting Tools, Reporting, Social Engineering, Vulnerability Assessment, Vulnerability Scanning</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
             <a href="https://www.credly.com/badges/8727958d-086a-4bb7-a475-8762a997407c/public_url" target="_blank" style="text-decoration: none; color: inherit;
             display: block;">
                 <div class="timeline-item">
@@ -854,119 +1256,56 @@
     </section>
 
     <section id="projects">
-        <h2 class="section-title">Featured Projects</h2>
+        <h2 class="section-title">Projects (Click to view)</h2>
         <div class="projects-grid">
             <div class="project-card">
                 <h3>Master's Thesis (In Progress)</h3>
-                <div class="project-tech">C++</div>
-                <p>Multi-objective Edge-Cloud resource allocation for IoT systems using metaheuristics. Implementing optimization algorithms for efficient resource distribution.</p>
+                <div class="project-tech">Cloud Computing, Software Development, Optimization, Scientific Research, C++ </div>
+                <p>The Application of Metaheuristics in Multi-Objective Optimization of Service Placement in an Edge-to-Cloud Infrastructure. </p>
             </div>
 
             <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/1734489853257/single-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
             display: block;">
                 <div class="project-card">
                     <h3>Engineer's Thesis</h3>
-                    <div class="project-tech">VLAN, Wi-Fi, IP Security</div>
+                    <div class="project-tech">Network Design, Network Security, LAN, VLAN, Wi-Fi, IP, DHCP, Scientific Research</div>
                     <p>Comprehensive ICT network project for Gospodarczy Bank Spółdzielczy in Strzelin with advanced security implementation.</p>
                 </div>
             </a>
 
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/2106236023/multiple-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU&treasuryMediaId=1717852051188" target="_blank" style="text-decoration: none; color: inherit;
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/2106236023/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
             display: block;">
                 <div class="project-card">
                     <h3>ChatGPT Detective</h3>
-                    <div class="project-tech">Python, TensorFlow, AWS</div>
+                    <div class="project-tech">Machine Learning, Cloud Computing, Software Development, Python, AWS, Natural Language Processing, TensorFlow, Team Work</div>
                     <p>Chrome Extension for AI-Written Text Detection. Achieved 94% accuracy on in-domain set and 87% accuracy on 20k mixed-topic dataset.</p>
                 </div>
             </a>
 
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/632445060/multiple-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU&treasuryMediaId=1751651151420" target="_blank" style="text-decoration: none; color: inherit;
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/632445060/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
             display: block;">
                 <div class="project-card">
                     <h3>Optimization methods</h3>
-                    <div class="project-tech">Python, HTML</div>
-                    <p>Optimizing NP-hard problems: UCTP (timetabling), cVRP (routing) using Multi Neighborhood SA, Genetic Algorithm, TS</p>
+                    <div class="project-tech">Optimization, Software Development, Scientific Research, Python, HTML</div>
+                    <p>Optimizing NP-hard problems: UCTP (timetabling), cVRP (routing) using Multi Neighborhood SA, Genetic Algorithm, TS.</p>
                 </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/191050153/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>Routing with Machine Learning traffic prediction</h3>
+                <div class="project-tech"> Network Design, Machine Learning, Python, Software Development, Optimization, Team Work</div>
+                <p>Routing and Spectrum Allocation algorithm with traffic prediction using machine learning methods for elastic optical networks.</p>
+            </div>
             </a>
 
             <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/1751650999674/single-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
             display: block;">
                 <div class="project-card">
                     <h3>Security of ICT Networks</h3>
-                    <div class="project-tech">LAN security</div>
-                    <p>Security program for a software company, covering risk analysis, access policies, IDS/IPS, VPN, backups, disaster recovery</p>
-                </div>
-            </a>
-
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/1734489698769/single-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>Private 5G network</h3>
-                    <div class="project-tech">5G</div>
-                    <p>A private 5G network project for the Czernica commune</p>
-                </div>
-            </a>
-
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/2105552123/multiple-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU&treasuryMediaId=1715797504785" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>Coverage mapping for TETRA</h3>
-                    <div class="project-tech">Wireless Networks</div>
-                    <p>Determination of the interference-free range of the TETRA trunking network base station (420 MHz)</p>
-                </div>
-            </a>
-
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/2105552123/multiple-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU&treasuryMediaId=1734488590079" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>Clutter loss</h3>
-                    <div class="project-tech">Wireless Networks</div>
-                    <p>Development of a spreadsheet to determine propagation losses resulting from the type of terrain cover (clutter loss) according to Recommendation ITU-R P.2108</p>
-                </div>
-            </a>
-
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/2105552123/multiple-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU&treasuryMediaId=1715797504786" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>LAN Design</h3>
-                    <div class="project-tech">VLAN, Wi-Fi, IP</div>
-                    <p>Enterprise LAN Design for Two Office Buildings featuring VLANs, Wi-Fi, IP addressing, security, redundancy, etc.</p>
-                </div>
-            </a>
-
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/1719247649802/single-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>WAN Design</h3>
-                    <div class="project-tech">WAN</div>
-                    <p>WAN interconnecting HQ, regional branches, local branches, and ATMs across five provinces</p>
-                </div>
-            </a>
-
-            <a href="https://github.com/cichy-michal/Dzial-pomocy-technicznej" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>Help Desk Application</h3>
-                    <div class="project-tech">Ruby on Rails, HTML, Oracle SQL</div>
-                    <p>Full-stack web application with automatic ticket assignment, role-based views, photo attachments, and authentication system.</p>
-                </div>
-            </a>
-
-            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/2105063108/multiple-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU&treasuryMediaId=1715797015869" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>Database systems</h3>
-                    <div class="project-tech">SQL, Oracle SQL Developer, Oracle SQL Data Modeler</div>
-                    <p>Relational database design and implementation for a small/medium company’s recruitment workflow</p>
-                </div>
-            </a>
-
-            <a href="https://github.com/cichy-michal/Programowanie-Obiektowe-Symulacja-Agentowa" target="_blank" style="text-decoration: none; color: inherit;
-            display: block;">
-                <div class="project-card">
-                    <h3>Object-oriented Programming</h3>
-                    <div class="project-tech">Java, UML</div>
-                    <p>Grid-based simulation with object-oriented design featuring use-case, class, activity, sequence and object diagrams</p>
+                    <div class="project-tech">Cybersecurity, Network Security, Security Policy</div>
+                    <p>Protection plan for a software company, covering risk analysis, access policies, IDS/IPS, VPN, backups, disaster recovery.</p>
                 </div>
             </a>
 
@@ -974,8 +1313,119 @@
             display: block;">
                 <div class="project-card">
                     <h3>Operating Systems</h3>
-                    <div class="project-tech">Bash, C++</div>
-                    <p>Bash scripts for task automation, CPU scheduling algorithms, Page replacement algorithms</p>
+                    <div class="project-tech">Bash, Linux</div>
+                    <p>A Bash scripting repository focused on automating repetitive tasks in Linux/CLI environments.</p>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/681340405/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>Software Testing</h3>
+                <div class="project-tech">Automated Testing, Unit Testing, Selenium, Python, C++, Team Work</div>
+                <p>Project 1: Automated tests using Selenium in Python for a web application.</p>
+                <p>Project 2: Unit tests in Python and C++ for two open-source projects.</p>
+            </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/684679366/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>IoT Storage Monitoring</h3>
+                <div class="project-tech">Raspberry Pi, Software Development, IoT, Python, InfluxDB, Grafana, Thingspeak, Team Work</div>
+                <p>Real-time monitoring system for storage conditions with local database, interactive dashboards, and Thingspeak email alerts.</p>
+            </div>
+            </a>
+
+            <a href="https://github.com/cichy-michal/Dzial-pomocy-technicznej" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>Help Desk Application</h3>
+                    <div class="project-tech">Website Design, Software Development, Ruby on Rails, HTML, Team Work</div>
+                    <p>Full-stack web application with automatic ticket assignment, role-based views, photo attachments, and authentication system.</p>
+                </div>
+            </a>
+            
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/2105063108/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>Database systems</h3>
+                    <div class="project-tech">Relational Database Design, SQL, Software Development</div>
+                    <p>Relational database design and implementation for a small/medium company’s recruitment workflow.</p>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/1470394139/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>Private 5G network</h3>
+                    <div class="project-tech">Network Design, Wireless Networks, Telecommunication, 5G, QGIS, Team Work</div>
+                    <p>A wireless network planning project involving the design of a private 5G network.</p>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/684254073/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>Methods of Software Project Management</h3>
+                <div class="project-tech">Agile, Git, Lean, Team Work</div>
+                <p>A project focused on the practical application of the Agile approach in a team setting to develop a application with version control.</p>
+            </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/683356257/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>Multimedia Services Designing</h3>
+                <div class="project-tech">UML, Team Work</div>
+                <p>Development of a concept for a web application for streaming video, using UML diagrams, data-flow diagrams, a functional hierarchy, and a context diagram.</p>
+            </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/details/projects/1719247649802/single-media-viewer/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>WAN Design</h3>
+                    <div class="project-tech">Network Design, WAN, IP, Team Work</div>
+                    <p>A wide area network (WAN) planning project for a bank operating across several provinces, covering the headquarters, regional branches, local branches, and an ATM service network.</p>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/2105552123/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>Propagation losses, coverage range</h3>
+                    <div class="project-tech">Wireless Networks, Telecommunications</div>
+                    <p>Topic 1: Propagation losses in an urban street canyon.</p>
+                    <p>Topic 2: Determining the coverage range of a TETRA network base station.</p>
+                    <p>Topic 3: Calculate propagation losses resulting from land-cover type (clutter loss).</p>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/1261019184/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>LAN Design</h3>
+                    <div class="project-tech">Network Design, LAN, VLAN, Wi-Fi, IP, Team Work</div>
+                    <p>LAN network design project for a company operating in two buildings (a total of 200+ end devices), including an infrastructure inventory, analysis of user requirements, and preparation of complete implementation documentation.</p>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/680686211/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>STM32 Embedded System</h3>
+                <div class="project-tech">Software Development, C, Embedded Systems</div>
+                <p>Embedded systems project involving the design and implementation of an electronic “wheel of fortune” using an STM32 microcontroller.</p>
+            </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/micha%C5%82-cichy-452593287/overlay/Project/1680892219/treasury/?profileId=ACoAAEWs274BCfFjyaGdanrfKZFhXPmJL8tu9FU" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+                <div class="project-card">
+                    <h3>Object-oriented Programming</h3>
+                    <div class="project-tech">Software Development, Java, UML</div>
+                    <p>Agent-based simulation project design and implementation modeling the life of intelligent civilizations in outer space, developed in Java using an object-oriented approach and UML diagrams.</p>
                 </div>
             </a>
 
@@ -983,46 +1433,19 @@
             display: block;">
                 <div class="project-card">
                     <h3>Traffic Theory</h3>
-                    <div class="project-tech">Riverbed Modeler</div>
-                    <p>Comparison of routing protocols: OSPF and RIP based on simulations in Riverbed Modeler</p>
+                    <div class="project-tech">Routing Protocols, OSPF, Riverbed Modeler, Team Work</div>
+                    <p>Analysis and comparison of the dynamic routing protocols RIP and OSPF, including a simulation in Riverbed Modeler.</p>
                 </div>
+            </a>            
+
+            <a href="https://github.com/cichy-michal/Podstawy-programowania" target="_blank" style="text-decoration: none; color: inherit;
+            display: block;">
+            <div class="project-card">
+                <h3>Introduction to programming</h3>
+                <div class="project-tech">Software Development, C++</div>
+                <p>The set of tasks included C++ implementations that developed key programming fundamentals.</p>
+            </div>
             </a>
-
-            <div class="project-card">
-                <h3>Elastic Optical Networks (In Progress)</h3>
-                <div class="project-tech">Python, Machine Learning</div>
-                <p>Routing optimization with traffic prediction using machine learning algorithms in Elastic Optical Networks infrastructure.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Web Testing Automation (In Progress)</h3>
-                <div class="project-tech">Selenium, Python</div>
-                <p>Designing, implementing, and executing comprehensive tests for web applications using Selenium framework.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>IoT Storage Monitoring (In Progress)</h3>
-                <div class="project-tech">Python, Raspberry Pi, InfluxDB, Grafana</div>
-                <p>Real-time monitoring system for storage conditions with local database, interactive dashboards, and Thingspeak email alerts.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Multimedia Services Designing (In Progress)</h3>
-                <div class="project-tech">UML</div>
-                <p>Design document using flow/UML diagrams for web video streaming platform</p>
-            </div>
-
-            <div class="project-card">
-                <h3>STM32 Embedded System (In Progress)</h3>
-                <div class="project-tech">C, Embedded Systems</div>
-                <p>Microcontroller application design with LCD rendering, joystick handling, and real-time system programming.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Methods of Software Project Management (In Progress)</h3>
-                <div class="project-tech">Git, Agile</div>
-                <p>Team project to build software organized with Lean/Agile practices and Git workflows</p>
-            </div>
         </div>
     </section>
 
@@ -1223,6 +1646,159 @@
                 }
             });
         });
+        // ===== Live Terminal (typing + commands) =====
+        (function () {
+        const outputEl = document.getElementById("terminalOutput");
+        const cmdEl = document.getElementById("terminalCmd");
+        const copyBtn = document.querySelector(".terminal-copy");
+        const buttons = document.querySelectorAll(".terminal-btn");
+
+        if (!outputEl || !cmdEl || !copyBtn || !buttons.length) return;
+
+        const responses = {
+            "whoami": () => [
+            "ICT Engineer with a 3-month professional internship experience. Currently pursuing a full-time Master’s degree. Seeking a full-time role with flexible working hours or a part-time position. Please review my projects for examples of my work. This interdisciplinary background helps me approach challenges with a broad perspective. Focused to grow and make a meaningful impact.",
+            ""
+            ].join("\n"),
+
+            "kpi": () => [
+            "Key Performance Metrics:",
+            "- Experience: 3 months internship",
+            "- Degree: Bachelor of Engineering, Master (in progress)",
+            "- Certifications: 5 (6th in progress)",
+            "- Projects: 21",
+            "- End of studies: 07/26",
+            ""
+            ].join("\n"),
+
+            "contact --quick": () => [
+            "Quick contact:",
+            "- Email: michal.cichy.career@gmail.com",
+            "- Phone: +48 724-051-008",
+            ""
+            ].join("\n"),
+
+            "projects --networks": () => [
+            "ICT Network Projects:",
+            "- Engineer's thesis: Comprehensive ICT network project for a bank with advanced security implementation.",
+            "- Routing with Machine Learning traffic prediction: Routing and Spectrum Allocation algorithm with traffic prediction using machine learning methods for elastic optical networks.",
+            "- Security of ICT Networks: Protection plan for a software company, covering risk analysis, access policies, IDS/IPS, VPN, backups, disaster recovery.",
+            "- Private 5G network: A wireless network planning project involving the design of a private 5G network.",
+            "- WAN Design: A wide area network (WAN) planning project for a bank operating across several provinces, covering the headquarters, regional branches, local branches, and an ATM service network.",
+            "- LAN Design: LAN network design project for a company operating in two buildings (a total of 200+ end devices), including an infrastructure inventory, analysis of user requirements, and preparation of complete implementation documentation.",
+            "- ",
+            ""
+            ].join("\n"),
+
+            "projects --cloud": () => [
+            "Cloud Computing Projects:",
+            "- Master's Thesis (In Progress): The Application of Metaheuristics in Multi-Objective Optimization of Service Placement in an Edge-to-Cloud Infrastructure.",
+            "- ChatGPT Detective: Chrome Extension for AI-Written Text Detection. Achieved 94% accuracy on in-domain set and 87% accuracy on 20k mixed-topic dataset.",
+            ""
+            ].join("\n"),
+
+            "projects --software": () => [
+            "Top skills:",
+            "- Optimization methods: Optimizing NP-hard problems: UCTP (timetabling), cVRP (routing) using Multi Neighborhood SA, Genetic Algorithm, TS.",
+            "- Software Testing: Project 1: Automated tests using Selenium in Python for a web application. Project 2: Unit tests in Python and C++ for two open-source projects.",
+            "- IoT Storage Monitoring: Real-time monitoring system for storage conditions with local database, interactive dashboards, and Thingspeak email alerts.",
+            "- Help Desk Application: Full-stack web application with automatic ticket assignment, role-based views, photo attachments, and authentication system.",
+            "- Database systems: Relational database design and implementation for a small/medium company’s recruitment workflow.",
+            "- STM32 Embedded System: Embedded systems project involving the design and implementation of an electronic “wheel of fortune” using an STM32 microcontroller.",
+            "- Object-oriented Programming: Agent-based simulation project design and implementation modeling the life of intelligent civilizations in outer space, developed in Java using an object-oriented approach and UML diagrams.",
+            "- Introduction to programming: The set of tasks included C++ implementations that developed key programming fundamentals.",
+            ""
+            ].join("\n"),
+
+            "clear": () => ""
+        };
+
+        let busy = false;
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        async function typeText(el, text, delay = 18) {
+            el.textContent = "";
+            for (let i = 0; i < text.length; i++) {
+            el.textContent += text[i];
+            await sleep(delay);
+            }
+        }
+
+        function appendOutput(block) {
+            if (block === "") {
+            outputEl.textContent = "";
+            return;
+            }
+            outputEl.textContent += (outputEl.textContent ? "\n" : "") + block;
+        }
+
+        async function runCommand(cmd) {
+            if (busy) return;
+            busy = true;
+
+            await typeText(cmdEl, cmd, 16);
+            await sleep(120);
+
+            appendOutput(`$ ${cmd}`);
+            const respFn = responses[cmd];
+            const resp = respFn ? respFn() : `Command not found: ${cmd}\n`;
+
+            if (cmd === "clear") {
+            appendOutput("");
+            } else {
+            appendOutput(resp);
+            }
+
+            cmdEl.textContent = "";
+            busy = false;
+        }
+
+        // Buttons
+        buttons.forEach(btn => {
+            btn.addEventListener("click", () => runCommand(btn.dataset.cmd || ""));
+        });
+
+        // Copy
+        copyBtn.addEventListener("click", async () => {
+            const text = outputEl.textContent.trim();
+            if (!text) return;
+            try {
+            await navigator.clipboard.writeText(text);
+            copyBtn.textContent = "Copied";
+            setTimeout(() => (copyBtn.textContent = "Copy"), 1100);
+            } catch {
+            // Fallback: select text
+            const range = document.createRange();
+            range.selectNodeContents(outputEl);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            document.execCommand("copy");
+            sel.removeAllRanges();
+            }
+        });
+
+        // Auto demo on first view (uses existing idea of observer in your file)
+        let started = false;
+        const termSection = document.getElementById("terminal");
+        if (!termSection) return;
+
+        const demo = async () => {
+            if (started) return;
+            started = true;
+            await runCommand("whoami");
+        };
+
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+            if (e.isIntersecting) demo();
+            });
+        }, { threshold: 0.25 });
+
+        obs.observe(termSection);
+        })();
+
     </script>
 </body>
 </html>
